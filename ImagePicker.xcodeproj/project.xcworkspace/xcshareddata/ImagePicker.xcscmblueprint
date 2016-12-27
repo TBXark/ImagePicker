@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7B2E27B22BA2CF92D6498B908C5A542ECC039203",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "0D16CF3253E570E2CE9C020D30E6A19B711CE491" : 9223372036854775807,
+    "7B2E27B22BA2CF92D6498B908C5A542ECC039203" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "015BB4F7-FB0A-4C4B-AF60-565208142A52",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0D16CF3253E570E2CE9C020D30E6A19B711CE491" : "..",
+    "7B2E27B22BA2CF92D6498B908C5A542ECC039203" : "ImagePicker\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ImagePicker",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ImagePicker.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:playalot\/Play-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0D16CF3253E570E2CE9C020D30E6A19B711CE491"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:TBXark\/ImagePicker.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7B2E27B22BA2CF92D6498B908C5A542ECC039203"
+    }
+  ]
+}
