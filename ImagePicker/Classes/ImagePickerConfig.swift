@@ -1,0 +1,31 @@
+//
+//  ImagePickerConfig.swift
+//  ImagePicker
+//
+//  Created by Tbxark on 26/12/2016.
+//  Copyright © 2016 Tbxark. All rights reserved.
+//
+
+import UIKit
+
+public struct ImagePickerConfig {
+    
+    public static var defaultColor = UIColor.darkGray
+    public static var numOfRow = (phone: 4, pad: 6)
+
+    public var appAblumName = "ImagePicker"
+
+    
+    public var maxSelect = 9
+    public var needCamera = true
+    public var autoComplete = false
+    
+    
+    
+    public var loadingHUG: (()-> Void)?
+    public var dismissHUG: (()-> Void)?
+    public var errorHUG: ((Error?)-> Void)?
+    
+    public init() {}
+    
+}
