@@ -10,10 +10,10 @@ import UIKit
 
 public struct ImagePickerConfig {
     
-    struct HUG {
-        static var show: (()->Void) = {}
-        static var dismiss: (()->Void) = {}
-        static var error: ((Error?)->Void) = { _ in}
+    public struct HUG {
+        public static var show: (()->Void) = {}
+        public static var dismiss: (()->Void) = {}
+        public static var error: ((Error?)->Void) = { _ in}
     }
 
     
