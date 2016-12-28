@@ -23,7 +23,7 @@ public struct ImagePickerConfig {
     public var appAblumName = "ImagePicker"
 
     
-    public var maxSelect = 9
+    public var maxSelect = 1
     public var needCamera = true
     public var autoComplete = false
 //    public var hug

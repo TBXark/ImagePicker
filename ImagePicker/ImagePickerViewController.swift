@@ -162,17 +162,14 @@ extension ImagePickerViewController:  AlbumViewControllerDelegate, PhotoViewCont
     }
     
     internal func photoPickerDidSelect(_ controller: PhotoViewController, model: PhotoModel) {
-        let finish = config.maxSelect == photoController.viewModel.count
-        if config.autoComplete && finish {
-        }
         navBar.setCount(photoController.viewModel.count)
-        navBar.continuteButton.isEnabled = finish
+        navBar.continuteButton.isEnabled = photoController.viewModel.count > 0
         delegate?.imagePickerViewController(self, didSelect: model)
     }
     
     internal func photoPickerDidDeselect(_ controller: PhotoViewController, model: PhotoModel) {
         let finish = config.maxSelect == photoController.viewModel.count
-        navBar.continuteButton.isEnabled = finish
+        navBar.continuteButton.isEnabled = photoController.viewModel.count > 0
         navBar.setCount(photoController.viewModel.count)
         delegate?.imagePickerViewController(self, didDeselect: model)
     }
