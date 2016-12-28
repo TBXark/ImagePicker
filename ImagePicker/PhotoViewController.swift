@@ -136,7 +136,7 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout {
         let i = needCamera ? row - 1 : row
         var model = allPhotos[i]
         let select = mode ?? !model.select
-        if select && viewModel.selectPhotos.count >= maxSelectCount {  return }
+        if select &&  maxSelectCount > 0 && viewModel.selectPhotos.count >= maxSelectCount {  return }
         if  select {
             let cell = imageList.cellForItem(at: IndexPath(row: row, section: 0)) as! PhotoCollectionViewCell
             model.select = true

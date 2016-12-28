@@ -9,14 +9,14 @@
 import UIKit
 
 class NavigationBar: UIView {
-    
+    static let height: CGFloat = 54
     let cancelButton: UIButton
     let continuteButton: UIButton
     let countLabel: UILabel
     let titleView = TKImagePickerTitleView()
     init() {
         
-        let h: CGFloat  = 54
+        let h: CGFloat  = NavigationBar.height
         let w: CGFloat  = UIScreen.main.bounds.width
         cancelButton = {
             let btn = UIButton()

@@ -163,6 +163,9 @@ extension ImagePickerViewController:  AlbumViewControllerDelegate, PhotoViewCont
     
     internal func photoPickerSelectCamera(_ controller: PhotoViewController) {
         // TODO: 跳转相机界面
+        let camera = CameraViewController()
+        camera.delegate = self
+        present(camera, animated: true, completion: nil)
     }
     
     internal func photoPickerDidSelect(_ controller: PhotoViewController, model: PhotoModel) {
