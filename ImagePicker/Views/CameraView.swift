@@ -72,7 +72,7 @@ class CameraView: UIView {
         
         do {
             input = try AVCaptureDeviceInput(device: device)
-        } catch let error as NSError {
+        } catch {
             input = nil
             return
         }
@@ -110,10 +110,8 @@ class CameraView: UIView {
         cameraQueue.async {
             let orientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)!
             CameraView.takePhoto(self.imageOutput, videoOrientation: orientation, cropSize: self.frame.size) { image in
-                var correctedImage = image
                 self.session.stopRunning()
-                
-                completion(correctedImage)
+                completion(image)
             }
         }
     }

@@ -15,12 +15,18 @@ public struct ImagePickerConfig {
         public static var dismiss: (()->Void) = {}
         public static var error: ((Error?)->Void) = { _ in}
     }
+    
+    
+    public struct AblumName {
+        public static var all = "全部照片"
+        public static var unknow = "未命名"
+        public static var app = "Play"
+    }
 
     
     public static var defaultColor = UIColor.darkGray
     public static var numOfRow: Int = 4
     
-    public var appAblumName = "Play"
 
     
     public var maxSelect = 1
@@ -29,5 +35,9 @@ public struct ImagePickerConfig {
 //    public var hug
         
     public init() {}
+    public init(max: Int, auto: Bool = false) {
+        maxSelect = max
+        autoComplete = auto
+    }
     
 }

@@ -144,7 +144,7 @@ extension ImagePickerViewController:  AlbumViewControllerDelegate, PhotoViewCont
         if let img = image {
             // 保存后调用回调函数
             ImagePickerConfig.HUG.show()
-            albumController.viewModel.saveImage(image: img, complete: {[weak self] (isSuccess, error) in
+            AlbumManager.saveImage(image: img, complete: {[weak self] (isSuccess, error) in
                 guard let `self` = self else { return }
                 if isSuccess {
                     ImagePickerConfig.HUG.dismiss()
@@ -175,7 +175,6 @@ extension ImagePickerViewController:  AlbumViewControllerDelegate, PhotoViewCont
     }
     
     internal func photoPickerDidDeselect(_ controller: PhotoViewController, model: PhotoModel) {
-        let finish = config.maxSelect == photoController.viewModel.count
         navBar.continuteButton.isEnabled = photoController.viewModel.count > 0
         navBar.setCount(photoController.viewModel.count)
         delegate?.imagePickerViewController(self, didDeselect: model)

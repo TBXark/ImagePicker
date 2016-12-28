@@ -9,16 +9,21 @@
 import UIKit
 import Photos
 
-class AlbumManager {
+public class AlbumManager {
+    
+    public static var customAssetCollection: PHAssetCollection? {
+        get {
+            if let c = _customAssetCollection { return c }
+            createDefaultAlbumIfNeed(complete: { _ in })
+            return nil
+        }
+    }
+    private static var _customAssetCollection: PHAssetCollection?
+
+    private let ablumQueue = DispatchQueue(label: "com.imagepicker", attributes: .concurrent)
     var albums = Value<[AlbumModel]>([])
     var custom = Value<AlbumModel?>(nil)
-    var customAssetCollection = Value<PHAssetCollection?>(nil)
-    private let albumName: String?
-    private let ablumQueue = DispatchQueue(label: "com.playalot.play.ablum", attributes: .concurrent)
-    
-    init(albumName: String?) {
-        self.albumName = albumName
-    }
+
     
     func fetchAllAlbum(complete handle: ((_ result: [AlbumModel]) -> Void)? = nil){
         PHPhotoLibrary.requestAuthorization { authorizationStatus in
@@ -36,7 +41,7 @@ class AlbumManager {
             
             
             
-            let allPhotoModel = AlbumModel(title: "All Photo", type: .allPhoto, count: allPhotos.count, fetchResult: allPhotos)
+            let allPhotoModel = AlbumModel(title: ImagePickerConfig.AblumName.all, type: .allPhoto, count: allPhotos.count, fetchResult: allPhotos)
             albumsTemp.append(allPhotoModel)
             
             
@@ -44,7 +49,10 @@ class AlbumManager {
                 let coll = smartCollection[i]
                 let asset = PHAsset.fetchAssets(in: coll, options: nil)
                 if asset.count > 0 {
-                    let model = AlbumModel(title: coll.localizedTitle ?? "Unknow", type: .common, count: asset.count, fetchResult: asset)
+                    let model = AlbumModel(title: coll.localizedTitle ?? ImagePickerConfig.AblumName.unknow,
+                                           type: .common,
+                                           count: asset.count,
+                                           fetchResult: asset)
                     albumsTemp.append(model)
                 }
             }
@@ -54,7 +62,7 @@ class AlbumManager {
                     continue
                 }
                 let asset = PHAsset.fetchAssets(in: list, options: nil)
-                let isCustom =  self.albumName != nil  && list.localizedTitle != nil ? list.localizedTitle! == self.albumName! : false
+                let isCustom = list.localizedTitle != nil ? list.localizedTitle! == ImagePickerConfig.AblumName.app : false
                 let model = AlbumModel(title: list.localizedTitle ?? "Unknow", type: (isCustom ? .default : .common), count: asset.count, fetchResult: asset)
                 albumsTemp.append(model)
                 if isCustom {
@@ -67,8 +75,8 @@ class AlbumManager {
     }
     
     
-    func createDefaultAlbumIfNeed(complete handle: @escaping (_ success: Bool) -> Void) {
-        guard let name = albumName else { return }
+    public static func createDefaultAlbumIfNeed(complete handle: @escaping (_ success: Bool) -> Void) {
+        let name = ImagePickerConfig.AblumName.app
         PHPhotoLibrary.requestAuthorization { (authorizationStatus) in
             guard authorizationStatus == .authorized else {
                 handle(false)
@@ -79,10 +87,10 @@ class AlbumManager {
             userCollection.enumerateObjects({ (list: PHCollection, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
                 if let list = list as? PHAssetCollection  {
                     if list.localizedTitle == name {
-                        self.customAssetCollection.value = list
+                        _customAssetCollection = list
                     }
                     if index == (count-1) {
-                        if self.customAssetCollection.value == nil {
+                        if _customAssetCollection == nil {
                             PHPhotoLibrary.shared().performChanges({
                                 PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: name)
                             }, completionHandler: { (success: Bool, error: Error?) in
@@ -98,13 +106,13 @@ class AlbumManager {
     }
     
     
-    func saveImage(image: UIImage, complete: ((Bool, Error?) -> Swift.Void)? = nil) {
+     public static func saveImage(image: UIImage, complete: ((Bool, Error?) -> Swift.Void)? = nil) {
         PHPhotoLibrary.shared().performChanges({ () -> Void in
             let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
             guard let asset = assetChangeRequest.placeholderForCreatedAsset else {return}
             let assets = NSMutableArray()
             assets.add(asset)
-            guard let collection = self.customAssetCollection.value else {
+            guard let collection = customAssetCollection else {
                 complete?(false, nil)
                 return
             }
@@ -116,5 +124,5 @@ class AlbumManager {
         }, completionHandler: complete)
     
     }
-
+    
 }

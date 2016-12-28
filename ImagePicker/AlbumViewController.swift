@@ -34,7 +34,7 @@ class AlbumViewController: UIViewController {
     
     init(config: ImagePickerConfig) {
         self.config = config
-        viewModel = AlbumManager(albumName: config.appAblumName)
+        viewModel = AlbumManager()
         super.init(nibName: nil, bundle: nil)
     }
     
