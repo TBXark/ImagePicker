@@ -66,7 +66,7 @@ class NavigationBar: UIView {
                                           "V:|-\((h-30)/2)-[cancelButton(==30)]",
                                           "V:|-\((h-30)/2)-[titleView(==30)]",
                                           "V:|-\((h-20)/2)-[countLabel(==20)]",
-                                          "V:|-\((h-30)/2)-[continuteButton(==30)]",
+                                          "V:|-\((h-30)/2)-[continuteButton(==24)]",
                                           ], views: views)
         addConstraints(cons)
         

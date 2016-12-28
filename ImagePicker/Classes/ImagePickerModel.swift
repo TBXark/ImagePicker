@@ -21,10 +21,6 @@ public struct AlbumModel {
     public var fetchResult: PHFetchResult<PHAsset>
 }
 
-public enum PhotoResult {
-    case image(data: UIImage)
-    case model(data: PhotoModel)
-}
 
 public struct PhotoModel {
     var select = false

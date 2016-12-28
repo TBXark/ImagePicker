@@ -10,6 +10,13 @@ import UIKit
 
 public struct ImagePickerConfig {
     
+    struct HUG {
+        static var show: (()->Void) = {}
+        static var dismiss: (()->Void) = {}
+        static var error: ((Error?)->Void) = { _ in}
+    }
+
+    
     public static var defaultColor = UIColor.darkGray
     public static var numOfRow = (phone: 4, pad: 6)
 
@@ -19,13 +26,8 @@ public struct ImagePickerConfig {
     public var maxSelect = 9
     public var needCamera = true
     public var autoComplete = false
-    
-    
-    
-    public var loadingHUG: (()-> Void)?
-    public var dismissHUG: (()-> Void)?
-    public var errorHUG: ((Error?)-> Void)?
-    
+//    public var hug
+        
     public init() {}
     
 }

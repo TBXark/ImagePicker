@@ -14,11 +14,7 @@ protocol CameraViewControllerDelegate: class {
 }
 
 class CameraViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
-
-
 }

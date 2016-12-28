@@ -7,16 +7,41 @@
 //
 
 import UIKit
+import Photos
+
+
+public protocol ImagePickerViewControllerDelegate: class {
+    func imagePickerViewController(_ controller: ImagePickerViewController, cancleSelect: Void)
+    // 选中图片
+    func imagePickerViewController(_ controller: ImagePickerViewController, didSelect photo: PhotoModel)
+    // 取消选中图片
+    func imagePickerViewController(_ controller: ImagePickerViewController, didDeselect photo: PhotoModel)
+    // 最终选择图片
+    func imagePickerViewController(_ controller: ImagePickerViewController, commitSelect  image: UIImage)
+    // 最终选择图片
+    func imagePickerViewController(_ controller: ImagePickerViewController, commitSelect photos: [PhotoModel])
+}
+
+extension ImagePickerViewControllerDelegate {
+    public func imagePickerViewController(_ controller: ImagePickerViewController, cancleSelect: Void) {}
+    public func imagePickerViewController(_ controller: ImagePickerViewController, didSelect photo: PhotoModel) {}
+    public func imagePickerViewController(_ controller: ImagePickerViewController, didDeselect photo: PhotoModel) {}
+    public func imagePickerViewController(_ controller: ImagePickerViewController, commitSelect capture: UIImage) {}
+    public func imagePickerViewController(_ controller: ImagePickerViewController, commitSelect photos: [PhotoModel]) {}
+
+}
 
 
 public class ImagePickerViewController: UIViewController {
 
     public let config: ImagePickerConfig
-    public var completeHandler: ((_ controller: ImagePickerViewController, _ result: [PhotoResult]?) -> Void)?
-
+    public weak var delegate: ImagePickerViewControllerDelegate?
+    
     let navBar = NavigationBar()
     let albumController: AlbumViewController
     let photoController: PhotoViewController
+    
+    
     
     public init(config: ImagePickerConfig) {
         self.config = config
@@ -66,8 +91,13 @@ extension ImagePickerViewController {
 
 
 extension ImagePickerViewController {
-    func completeImagePicker(result: [PhotoResult]?) {
-        completeHandler?(self, result)
+    
+    func cancleButtonClick( _ btn: UIButton) {
+        delegate?.imagePickerViewController(self, cancleSelect: ())
+    }
+    
+    func continuteButtonClick(_ btn:UIButton) {
+        delegate?.imagePickerViewController(self, commitSelect: photoController.viewModel.selectPhotos)
     }
     
     
@@ -107,39 +137,44 @@ extension ImagePickerViewController:  AlbumViewControllerDelegate, PhotoViewCont
     }
     
     internal func cameraViewController(_ controller: CameraViewController, capture image: UIImage?) {
-        if config.autoComplete {
-            if let img = image {
-                completeImagePicker(result: [PhotoResult.image(data: img)])
-            } else {
-                completeImagePicker(result: nil)
-            }
-            controller.dismiss(animated: false, completion: nil)
-        } else if let img = image {
-            albumController.viewModel.saveImage(image: img, complete: { (success, error) in
-                controller.dismiss(animated: false, completion: nil)
+        if let img = image {
+            // 保存后调用回调函数
+            ImagePickerConfig.HUG.show()
+            albumController.viewModel.saveImage(image: img, complete: {[weak self] (isSuccess, error) in
+                guard let `self` = self else { return }
+                if isSuccess {
+                    ImagePickerConfig.HUG.dismiss()
+                } else {
+                    ImagePickerConfig.HUG.error(error)
+                }
+                self.delegate?.imagePickerViewController(self, commitSelect: img)
+                controller.dismiss(animated: true , completion: nil)
             })
         } else {
+            ImagePickerConfig.HUG.error(nil)
             controller.dismiss(animated: false, completion: nil)
         }
+        
     }
     
     internal func photoPickerSelectCamera(_ controller: PhotoViewController) {
-        
+        // TODO: 跳转相机界面
     }
     
     internal func photoPickerDidSelect(_ controller: PhotoViewController, model: PhotoModel) {
         let finish = config.maxSelect == photoController.viewModel.count
         if config.autoComplete && finish {
-            completeImagePicker(result: photoController.viewModel.selectPhotos.map { PhotoResult.model(data: $0)})
         }
         navBar.setCount(photoController.viewModel.count)
         navBar.continuteButton.isEnabled = finish
+        delegate?.imagePickerViewController(self, didSelect: model)
     }
     
     internal func photoPickerDidDeselect(_ controller: PhotoViewController, model: PhotoModel) {
         let finish = config.maxSelect == photoController.viewModel.count
         navBar.continuteButton.isEnabled = finish
         navBar.setCount(photoController.viewModel.count)
+        delegate?.imagePickerViewController(self, didDeselect: model)
     }
 
 }
