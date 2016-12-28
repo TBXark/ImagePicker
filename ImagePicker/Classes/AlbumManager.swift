@@ -21,8 +21,10 @@ public class AlbumManager {
     private static var _customAssetCollection: PHAssetCollection?
 
     private let ablumQueue = DispatchQueue(label: "com.imagepicker", attributes: .concurrent)
+    private var appAblumIndex: Int?
     var albums = Value<[AlbumModel]>([])
-    var custom = Value<AlbumModel?>(nil)
+    var custom = Value<PHAssetCollection?>(nil)
+    
 
     
     func fetchAllAlbum(complete handle: ((_ result: [AlbumModel]) -> Void)? = nil){
@@ -66,11 +68,35 @@ public class AlbumManager {
                 let model = AlbumModel(title: list.localizedTitle ?? "Unknow", type: (isCustom ? .default : .common), count: asset.count, fetchResult: asset)
                 albumsTemp.append(model)
                 if isCustom {
-                    self.custom.value = model
+                    self.appAblumIndex = albumsTemp.count - 1
+                    self.custom.value = list
                 }
             }
             self.albums.value = albumsTemp
             handle?(albumsTemp)
+        }
+    }
+    
+    
+    func refreshAblumArray() {
+        ablumQueue.async { () -> Void in
+            var origin = self.albums.value
+            let allPhotosOptions = PHFetchOptions()
+            allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+            let allPhotos: PHFetchResult = PHAsset.fetchAssets(with: allPhotosOptions)
+            let allPhotoModel = AlbumModel(title: ImagePickerConfig.AblumName.all, type: .allPhoto, count: allPhotos.count, fetchResult: allPhotos)
+            origin[0] = allPhotoModel
+            
+            guard let defaultAlbum = self.custom.value, let index = self.appAblumIndex else {
+                self.albums.value = origin
+                return
+            }
+            let asset = PHAsset.fetchAssets(in: defaultAlbum, options: nil)
+            let model = AlbumModel(title: ImagePickerConfig.AblumName.app, type:  .default, count: asset.count, fetchResult: asset)
+            if origin.count > index && origin[index].title == model.title {
+                origin[index] = model
+            }
+            self.albums.value = origin
         }
     }
     

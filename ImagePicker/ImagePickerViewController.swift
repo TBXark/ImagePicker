@@ -151,6 +151,7 @@ extension ImagePickerViewController:  AlbumViewControllerDelegate, PhotoViewCont
                 } else {
                     ImagePickerConfig.HUG.error(error)
                 }
+                self.albumController.viewModel.refreshAblumArray()
                 self.delegate?.imagePickerViewController(self, commitSelect: img)
                 controller.dismiss(animated: true , completion: nil)
             })
