@@ -24,7 +24,7 @@ public struct AlbumModel {
 
 public struct PhotoModel {
     var select = false
-    let asset: PHAsset
+    public let asset: PHAsset
     init(_ asset: PHAsset) {
         self.asset = asset
     }    

@@ -40,7 +40,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         selectIndex.layer.cornerRadius = 10
         selectIndex.clipsToBounds = true
         selectIndex.textAlignment = .center
-        selectIndex.textColor = UIColor.white
+        selectIndex.textColor = UIColor.darkGray
         selectIndex.font = UIFont.systemFont(ofSize: 12)
         
         selectMask.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -80,7 +80,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     func configureWithCameraMode() {
-        imageView.image = UIImage(named: "camera_icon")
+        imageView.image = UIImage(named: "ip_camera_icon")
         imageView.backgroundColor = ImagePickerConfig.defaultColor
         imageView.contentMode = .center
         changeState(select: false, index: nil)

@@ -20,15 +20,15 @@ class NavigationBar: UIView {
         let w: CGFloat  = UIScreen.main.bounds.width
         cancelButton = {
             let btn = UIButton()
-            btn.setImage(UIImage(named: "nav_close_button"), for: .normal)
+            btn.setImage(UIImage(named: "ip_nav_close_button"), for: .normal)
             btn.imageView?.contentMode = .scaleAspectFill
             return btn
         }()
         continuteButton  = {
             let text = UIButton()
             text.setTitle("继续", for: .normal)
-            text.setBackgroundImage(UIImage(named: "btn_bg_enable"), for: .normal)
-            text.setBackgroundImage(UIImage(named: "btn_bg_disable"), for: .disabled)
+            text.setBackgroundImage(UIImage(named: "ip_btn_bg_enable"), for: .normal)
+            text.setBackgroundImage(UIImage(named: "ip_btn_bg_disable"), for: .disabled)
             text.setTitleColor(UIColor.darkGray, for: .normal)
             text.setTitleColor(UIColor.gray, for: .disabled)
             text.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
@@ -42,7 +42,7 @@ class NavigationBar: UIView {
             label.layer.cornerRadius = 10
             label.clipsToBounds = true
             label.backgroundColor = ImagePickerConfig.defaultColor
-            label.textColor = UIColor.white
+            label.textColor = UIColor.darkGray
             label.textAlignment = .center
             label.font = UIFont.boldSystemFont(ofSize: 13)
             return label
@@ -66,7 +66,7 @@ class NavigationBar: UIView {
                                           "V:|-\((h-30)/2)-[cancelButton(==30)]",
                                           "V:|-\((h-30)/2)-[titleView(==30)]",
                                           "V:|-\((h-20)/2)-[countLabel(==20)]",
-                                          "V:|-\((h-30)/2)-[continuteButton(==24)]",
+                                          "V:|-\((h-24)/2)-[continuteButton(==24)]",
                                           ], views: views)
         addConstraints(cons)
         

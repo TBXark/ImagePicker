@@ -86,6 +86,10 @@ extension ImagePickerViewController {
         albumController.delegate = self
         photoController.delegate = self
         
+        navBar.cancelButton.addTarget(self, action: #selector(ImagePickerViewController.cancleButtonClick(_:)), for: .touchUpInside)
+        navBar.continuteButton.addTarget(self, action: #selector(ImagePickerViewController.continuteButtonClick(_:)), for: .touchUpInside)
+
+        
     }
 }
 
