@@ -20,7 +20,7 @@ public struct ImagePickerConfig {
     public static var defaultColor = UIColor.darkGray
     public static var numOfRow = (phone: 4, pad: 6)
 
-    public var appAblumName = "ImagePicker"
+    public var appAblumName = "Play"
 
     
     public var maxSelect = 1
