@@ -114,7 +114,7 @@ extension CameraViewController {
         
         let nl = ["H:|-0-[nav]-0-|",
                   "V:|-0-[nav(==\(NavigationBar.height))]",
-            "H:|-20-[close(==20)]",
+            "H:|-15-[close(==20)]",
             "V:|-\((NavigationBar.height - 20)/2)-[close(==20)]"]
         
         
