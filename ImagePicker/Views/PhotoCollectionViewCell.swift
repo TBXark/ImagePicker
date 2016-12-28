@@ -11,7 +11,7 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
     static let iden = "PhotoCollectionViewCell"
     static let size: CGSize = {
-        let c =  CGFloat(ImagePickerConfig.numOfRow.phone)
+        let c =  CGFloat(ImagePickerConfig.numOfRow)
         let s = CGFloat(1)
         let w = (UIScreen.main.bounds.width - (c - 1) * 1)/c
         return CGSize(width: w, height: w)
