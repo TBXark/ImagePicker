@@ -20,15 +20,15 @@ class NavigationBar: UIView {
         let w: CGFloat  = UIScreen.main.bounds.width
         cancelButton = {
             let btn = UIButton()
-            btn.setImage(UIImage(named: "ip_nav_close_button"), for: .normal)
+            btn.setImage(UIImage.ip_imageWithName("ip_nav_close_button"), for: .normal)
             btn.imageView?.contentMode = .scaleAspectFill
             return btn
         }()
         continuteButton  = {
             let text = UIButton()
             text.setTitle("继续", for: .normal)
-            text.setBackgroundImage(UIImage(named: "ip_btn_bg_enable"), for: .normal)
-            text.setBackgroundImage(UIImage(named: "ip_btn_bg_disable"), for: .disabled)
+            text.setBackgroundImage(UIImage.ip_imageWithName("ip_btn_bg_enable"), for: .normal)
+            text.setBackgroundImage(UIImage.ip_imageWithName("ip_btn_bg_disable"), for: .disabled)
             text.setTitleColor(UIColor.darkGray, for: .normal)
             text.setTitleColor(UIColor.gray, for: .disabled)
             text.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)

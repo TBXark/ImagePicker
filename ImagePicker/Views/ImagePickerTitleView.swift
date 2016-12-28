@@ -53,7 +53,7 @@ class TKImagePickerTitleView: UIView {
         addSubview(stateImage)
         
         stateImage.contentMode = .scaleAspectFit
-        stateImage.image = UIImage(named: "ip_select_album")
+        stateImage.image = UIImage.ip_imageWithName("ip_select_album")
         
         textLable.textColor = UIColor.darkGray
         textLable.textAlignment = .center

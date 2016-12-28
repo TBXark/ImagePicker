@@ -80,7 +80,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     func configureWithCameraMode() {
-        imageView.image = UIImage(named: "ip_camera_icon")
+        imageView.image = UIImage.ip_imageWithName("ip_camera_icon")
         imageView.backgroundColor = ImagePickerConfig.defaultColor
         imageView.contentMode = .center
         changeState(select: false, index: nil)
