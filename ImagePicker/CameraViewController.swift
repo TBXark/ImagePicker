@@ -74,7 +74,6 @@ extension CameraViewController {
     func shareInit() {
     
         
-        view.addSubview(cameraView)
         
         cameraView.frame = view.bounds
         cameraView.frame.origin.y = NavigationBar.height
@@ -98,9 +97,10 @@ extension CameraViewController {
         toolBar.isUserInteractionEnabled = true
         
         
+        view.addSubview(cameraView)
         view.addSubview(navBar)
         view.addSubview(toolBar)
-        
+
         navBar.addSubview(closeButton)
         toolBar.addSubview(cameraButton)
         toolBar.addSubview(swapButton)
@@ -121,7 +121,7 @@ extension CameraViewController {
         let size: CGFloat = 100
         let btns: CGFloat = 30
         let space = (UIScreen.main.bounds.width - size - btns * 2) / 4.0
-        let tl = ["H:|-\(space)-[swap==\(btns)]-\(space)-[camera==\(size)]-\(space)-[flash==\(btns)]-\(space)-|"]
+        let tl = ["H:|-\(space)-[swap==(\(btns))]-\(space)-[camera==(\(size))]-\(space)-[flash==(\(btns))]-\(space)-|"]
         
         view.addConstraints(view.makeConstraints(vlfs: nl, views: nd))
         view.addConstraints(view.makeConstraints(vlfs: tl, views: td))
