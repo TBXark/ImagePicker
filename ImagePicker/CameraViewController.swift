@@ -109,7 +109,7 @@ extension CameraViewController {
         cameraButton.isEnabled = true
         flashButton.isEnabled = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)?.hasTorch ?? false
         
-        let td = ["tool": toolBar, "swap": swapButton, "camera": cameraView, "flash": flashButton]
+        let td = ["tool": toolBar, "swap": swapButton, "camera": cameraButton, "flash": flashButton]
         let nd = ["nav": navBar, "close": closeButton]
         
         let nl = ["H:|-0-[nav]-0-|",
@@ -118,24 +118,21 @@ extension CameraViewController {
             "V:|-\((NavigationBar.height - 20)/2)-[close(==20)]"]
         
         
-        let size: CGFloat = 100
+        let cams: CGFloat = 100
         let btns: CGFloat = 30
-        let space = (UIScreen.main.bounds.width - size - btns * 2) / 4.0
-        let tl = ["H:|-\(space)-[swap==(\(btns))]-\(space)-[camera==(\(size))]-\(space)-[flash==(\(btns))]-\(space)-|"]
+        let space = (UIScreen.main.bounds.width - cams - btns * 2) / 4.0
+        let th = UIScreen.main.bounds.height - UIScreen.main.bounds.width - NavigationBar.height
+        let tl = ["H:|-0-[tool]-0-|",
+                  "V:[tool(==\(th))]-0-|",
+                  "H:|-\(space)-[swap(==\(btns))]-\(space)-[camera(==\(cams))]-\(space)-[flash(==\(btns))]-\(space)-|",
+                  "V:|-\((th - btns)/2)-[swap(==\(btns))]",
+                  "V:|-\((th - btns)/2)-[flash(==\(btns))]",
+                  "V:|-\((th - cams)/2)-[camera(==\(cams))]",
+                 ]
         
         view.addConstraints(view.makeConstraints(vlfs: nl, views: nd))
         view.addConstraints(view.makeConstraints(vlfs: tl, views: td))
         
-        for v in [swapButton, cameraView, flashButton] {
-            toolBar.addConstraint(NSLayoutConstraint(item: v,
-                                                     attribute: NSLayoutAttribute.centerY,
-                                                     relatedBy: NSLayoutRelation.equal,
-                                                     toItem: toolBar,
-                                                     attribute: NSLayoutAttribute.centerY,
-                                                     multiplier: 1.0, constant: 0.0));
-            
-        }
-
     }
 }
 
