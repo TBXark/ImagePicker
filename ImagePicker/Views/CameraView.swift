@@ -111,9 +111,6 @@ class CameraView: UIView {
             let orientation = AVCaptureVideoOrientation(rawValue: UIDevice.current.orientation.rawValue)!
             CameraView.takePhoto(self.imageOutput, videoOrientation: orientation, cropSize: self.frame.size) { image in
                 var correctedImage = image
-                if self.currentPosition == .front {
-                    correctedImage = image.fixFrontCameraOrientation()
-                }
                 self.session.stopRunning()
                 
                 completion(correctedImage)
@@ -176,7 +173,27 @@ class CameraView: UIView {
     
     
     class func crop(image: UIImage, zoom: CGFloat,  cropRect: CGRect) -> UIImage {
-        
+       
+        var newOrient: UIImageOrientation = .up
+        switch image.imageOrientation {
+        case .up:
+            newOrient = .upMirrored
+        case .upMirrored:
+            newOrient = .up
+        case .down:
+            newOrient = .downMirrored
+        case .downMirrored:
+            newOrient = .down
+        case .left:
+            newOrient = .rightMirrored
+        case .leftMirrored:
+            newOrient = .right
+        case .right:
+            newOrient = .leftMirrored
+        case .rightMirrored:
+            newOrient = .left
+        }
+
         var rect = cropRect
         rect.origin.x *= image.scale * zoom
         rect.origin.y *= image.scale * zoom
@@ -189,7 +206,7 @@ class CameraView: UIView {
             let imageRef = cgimg.cropping(to: rect) else {
                 return UIImage()
         }
-        let image =  UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+        let image =  UIImage(cgImage: imageRef, scale: image.scale, orientation: newOrient)
         return image
 
     
